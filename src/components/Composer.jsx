@@ -1,15 +1,16 @@
 import { useState} from "react";
-import { send } from "vite";
 
-export default function Composer() {
+
+export default function Composer({onSend}) {
   const [draft, setDraft] = useState("");
 
-  functionsend(){
+  function send(){
     const text = draft.trim();
     if(text === ""){
       return;
     }
-    console.log("sends:", text);
+    //setMessages([...messages,text]);
+    onSend(text);
     setDraft("");
   }
   function handleSubmit(e){

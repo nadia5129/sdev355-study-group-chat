@@ -1,17 +1,16 @@
-export default function Sidebar({ channels }) {
+import {useState} from "react";
 
-  function handleChannelClick(e,channel){
-    console.log("clicked", channel.name);
-    console.log("type:", e.type);
-    console.log("target:", e.target.tagName, e.target.textContent);
-    console.log("a real browser event underneath:", e.nativeEvent instanceof MouseEvent);
+export default function Sidebar({ channels, activeId, onSelectChannel}) {
 
-  }
   return (
     <nav className="sidebar">
       <h2>Channels</h2>
       {channels.map((channel) => (
-        <button key={channel.id} className="channel" onClick={(e) => handleChannelClick(e,channel)}>
+        <button 
+        key={channel.id}
+         className={channel.id === activeId ? "channel active" : "channel"}
+         onClick={() => onSelectChannel(channel.id)}
+         >
           # {channel.name}
         </button>
       ))}

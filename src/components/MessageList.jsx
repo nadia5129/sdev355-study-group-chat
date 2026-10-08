@@ -1,6 +1,9 @@
+import { useState } from "react";
 import Message from "./Message.jsx";
+import { SEED_MESSAGES } from "../data.js";
 
-export default function MessageList({ messages }) {
+export default function MessageList({messages}) {
+ 
   return (
     <ul className="messages">
       {messages.map((message) => (
