@@ -1,4 +1,9 @@
 export default function Composer() {
+  function handleSubmit(e){
+    e.preventDefault();
+    console.log("submit stopped:", e.type);
+    }
+  
   return (
     <form className="composer">
       <textarea name="draft" rows={2} placeholder="Type a message..." />
