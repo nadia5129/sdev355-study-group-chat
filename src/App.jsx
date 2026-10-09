@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar.jsx";
 import ChatHeader from "./components/ChatHeader.jsx";
 import MessageList from "./components/MessageList.jsx";
 import Composer from "./components/Composer.jsx";
+import PinnedBar from "./components/PinnedBar.jsx";
 
 function now(){
   return new Date().toLocaleTimeString([], {hour: "numeric", minute: "2-digit"});
@@ -14,8 +15,11 @@ export default function App() {
   const [activeId, setActiveId] = useState("general");
   const [messages, setMessages] = useState(SEED_MESSAGES);
   const [isTyping, setIsTyping] = useState(false);
+  const [pinnedId, setPinnedId] = useState(null);
 
   const channel = CHANNELS.find((c) => c.id === activeId);
+  const pinned = messages[activeId].find((m) => m.id === pinnedId);
+
 
   function handleSend(text){
     const message = { id: crypto.randsomUUID(), author: "You", time:now(), hearts: 0, text};
@@ -27,6 +31,10 @@ export default function App() {
     setMessages({... messages, [activeId]: updated});
   }
 
+  function handlePin(id){
+    setPinnedId(pinnedId === id ? null : id);
+  }
+
   return (
     <div className="app">
       <Sidebar 
@@ -36,7 +44,12 @@ export default function App() {
        />
       <main className="main">
         <ChatHeader channel={channel} isTyping={isTyping} />
-        <MessageList messages={messages[activeId]} onReact={handleReact} />
+        <PinnedBar message={pinned} onUnpin={() => setPinnedId(null)}/>
+        <MessageList
+         messages={messages[activeId]} 
+         pinnedId={pinnedId}
+         onPin={handlePin}
+         onReact={handleReact} />
         <Composer onSend={handleSend} onTypingChange={setIsTyping}/>
       </main>
     </div>
