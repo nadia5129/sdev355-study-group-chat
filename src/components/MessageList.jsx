@@ -2,12 +2,12 @@ import { useState } from "react";
 import Message from "./Message.jsx";
 import { SEED_MESSAGES } from "../data.js";
 
-export default function MessageList({messages}) {
+export default function MessageList({messages, onReact}) {
  
   return (
     <ul className="messages">
       {messages.map((message) => (
-        <Message key={message.id} message={message} />
+        <Message key={message.id} message={message} onReact={onReact} />
       ))}
     </ul>
   );
